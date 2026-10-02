@@ -6,80 +6,132 @@
   <title>AI Promo Studio</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Fabric.js CDN (Canvas Editor အတွက်) -->
+  <!-- Fabric.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
   <style>
-    body { background-color: #0f172a; color: #f8fafc; font-family: sans-serif; }
-    .canvas-container { margin: 0 auto; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5); }
+    body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .canvas-container { margin: 0 auto; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent">
-      🎰 AI Promo Studio
-    </h1>
-    <span class="text-xs bg-slate-800 text-slate-400 px-3 py-1 rounded-full border border-slate-700">Beta v1.0</span>
+  <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-6 py-3.5 flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🎰</span>
+      <div>
+        <h1 class="text-lg font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent">
+          AI Promo Studio
+        </h1>
+        <p class="text-xs text-slate-400">Casino Content & Video Generator</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">Pro Studio</span>
+    </div>
   </header>
 
-  <!-- Main Body -->
-  <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+  <!-- Main Workspace -->
+  <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
     
     <!-- Sidebar Controls -->
-    <aside class="w-full md:w-80 bg-slate-900/90 border-r border-slate-800 p-5 flex flex-col gap-5 overflow-y-auto">
+    <aside class="w-full lg:w-96 bg-slate-900 border-r border-slate-800 p-5 flex flex-col gap-6 overflow-y-auto max-h-screen">
+      
+      <!-- 1. AI Image Generator Panel -->
+      <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+          <span>✨</span> AI ပုံထုတ်လုပ်ရန် (AI Image Gen)
+        </h2>
+        <textarea id="aiPrompt" rows="2" placeholder="ဥပမာ - Lucky Spin wheel with gold coins, 3D luxury casino style..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"></textarea>
+        <button id="generateAiImgBtn" class="mt-2.5 w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold py-2 rounded-lg text-xs transition flex justify-center items-center gap-1.5 shadow-md">
+          <span>🪄</span> AI ဖြင့် ပုံအသစ်ထုတ်မည်
+        </button>
+      </div>
+
+      <!-- 2. Manual Upload & Cut/Paste -->
       <div>
-        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3">ပုံထည့်သွင်းရန်</h2>
-        <label class="block w-full cursor-pointer bg-slate-800 hover:bg-slate-700 border border-dashed border-slate-600 rounded-lg p-4 text-center transition">
-          <span class="text-sm text-amber-400 font-medium">+ ပုံရွေးချယ်တင်ပါ</span>
+        <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">မိမိစိတ်ကြိုက်ပုံထည့်ရန်</h2>
+        <label class="block w-full cursor-pointer bg-slate-800/80 hover:bg-slate-800 border border-dashed border-slate-600 hover:border-amber-400/60 rounded-xl p-3 text-center transition">
+          <span class="text-xs text-amber-400 font-medium">+ ပုံရွေးချယ်တင်ပါ (Upload)</span>
           <input type="file" id="imageLoader" accept="image/*" class="hidden">
         </label>
       </div>
 
+      <!-- 3. Text & Casino Promo Presets -->
       <div>
-        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3">စာသားထည့်ရန်</h2>
+        <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">စာသားနှင့် စာတန်းဒီဇိုင်း</h2>
         <div class="flex flex-col gap-2">
-          <input type="text" id="textInput" placeholder="စာသားရိုက်ထည့်ပါ..." class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
-          <button id="addTextBtn" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold py-2 rounded text-sm transition">
+          <input type="text" id="textInput" placeholder="စာသားရိုက်ထည့်ပါ..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+          
+          <!-- Preset Chips -->
+          <div class="flex flex-wrap gap-1.5 mt-1">
+            <button class="preset-chip text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">သွင်းငွေ 100% ဘောနပ်စ်</button>
+            <button class="preset-chip text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">ရှမ်းကိုးမီး / စလော့</button>
+            <button class="preset-chip text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">VIP အထူးလက်ဆောင်</button>
+          </div>
+
+          <button id="addTextBtn" class="mt-1 w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold py-2 rounded-lg text-xs border border-slate-700 transition">
             + စာသားထည့်မည်
           </button>
         </div>
       </div>
 
+      <!-- 4. Text-to-Speech & Voice Preview Section -->
+      <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+        <h2 class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+          <span>🔊</span> မြန်မာအသံ ထည့်သွင်းရန် (Burmese TTS)
+        </h2>
+        <input type="text" id="ttsInput" placeholder="အသံထွက်စေချင်သည့် စာသား..." value="အခုပဲ အကောင့်ဖွင့်ပြီး ဘောနပ်စ်ရယူလိုက်ပါ" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-sky-400">
+        <button id="speakBtn" class="mt-2 w-full bg-sky-600 hover:bg-sky-500 text-white font-semibold py-2 rounded-lg text-xs transition flex justify-center items-center gap-1.5">
+          <span>▶️</span> အသံစမ်းနားထောင်မည်
+        </button>
+      </div>
+
+      <!-- 5. Actions & Canvas Operations -->
       <div>
-        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3">ပြင်ဆင်ချက်များ</h2>
+        <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">တည်းဖြတ်မှု ထိန်းချုပ်ခန်း</h2>
         <div class="grid grid-cols-2 gap-2">
-          <button id="deleteBtn" class="bg-red-950/40 hover:bg-red-900/60 text-red-400 border border-red-800/50 py-2 rounded text-xs transition">
+          <button id="deleteBtn" class="bg-rose-950/30 hover:bg-rose-900/50 text-rose-400 border border-rose-900/50 py-2 rounded-lg text-xs transition">
             ရွေးထားတာဖျက်မည်
           </button>
-          <button id="clearBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 py-2 rounded text-xs transition">
+          <button id="clearBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700 py-2 rounded-lg text-xs transition">
             အားလုံးရှင်းမည်
           </button>
         </div>
       </div>
 
-      <div class="mt-auto pt-4 border-t border-slate-800">
-        <button id="downloadBtn" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-lg text-sm transition shadow-lg shadow-emerald-950">
-          📥 ပုံဒေါင်းလုဒ်ဆွဲမည်
+      <!-- Download Button -->
+      <div class="mt-auto pt-3 border-t border-slate-800">
+        <button id="downloadBtn" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl text-sm transition shadow-lg shadow-emerald-950/50 flex justify-center items-center gap-2">
+          <span>📥</span> ပရိုမိုးရှင်းပုံ ဒေါင်းလုဒ်ဆွဲမည်
         </button>
       </div>
     </aside>
 
-    <!-- Canvas Workspace -->
+    <!-- Canvas Preview Area -->
     <main class="flex-1 bg-slate-950 p-6 flex items-center justify-center overflow-auto">
-      <div class="border-2 border-slate-800 rounded-lg overflow-hidden bg-slate-900">
+      <div class="border border-slate-800 rounded-2xl overflow-hidden bg-slate-900 shadow-2xl">
         <canvas id="promoCanvas" width="600" height="600"></canvas>
       </div>
     </main>
   </div>
 
   <script>
-    // Canvas တည်ဆောက်ခြင်း
+    // Canvas Initialization
     const canvas = new fabric.Canvas('promoCanvas', {
-      backgroundColor: '#1e293b'
+      backgroundColor: '#111827'
     });
 
-    // ပုံ Upload တင်ခြင်း
+    // Preset Sample Image
+    fabric.Image.fromURL('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=600&auto=format&fit=crop&q=80', function(img) {
+      img.scaleToWidth(600);
+      img.selectable = false;
+      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+    });
+
+    // Image Upload
     document.getElementById('imageLoader').addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -94,41 +146,83 @@
       reader.readAsDataURL(file);
     });
 
-    // စာသား ထည့်သွင်းခြင်း
-    document.getElementById('addTextBtn').addEventListener('click', function () {
-      const val = document.getElementById('textInput').value.trim() || 'ပရိုမိုးရှင်း အထူးလက်ဆောင်';
-      const text = new fabric.IText(val, {
-        left: 100,
-        top: 100,
+    // Add Text Function
+    function addTextToCanvas(content) {
+      const text = new fabric.IText(content, {
+        left: 80,
+        top: 250,
         fontFamily: 'sans-serif',
-        fill: '#fbbf24',
-        fontSize: 32,
+        fill: '#facc15',
+        stroke: '#000000',
+        strokeWidth: 2,
+        fontSize: 34,
         fontWeight: 'bold'
       });
       canvas.add(text);
       canvas.setActiveObject(text);
+    }
+
+    document.getElementById('addTextBtn').addEventListener('click', function () {
+      const val = document.getElementById('textInput').value.trim() || 'ပရိုမိုးရှင်း အထူးလက်ဆောင်';
+      addTextToCanvas(val);
     });
 
-    // ဖျက်ရန်
+    // Preset Chips Click
+    document.querySelectorAll('.preset-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        document.getElementById('textInput').value = this.innerText;
+        addTextToCanvas(this.innerText);
+      });
+    });
+
+    // Simulated AI Image Generator (Demo Preview)
+    document.getElementById('generateAiImgBtn').addEventListener('click', function() {
+      const prompt = document.getElementById('aiPrompt').value.trim();
+      const btn = this;
+      btn.innerText = "⏳ AI ပုံထုတ်လုပ်နေပါသည်...";
+      btn.disabled = true;
+
+      setTimeout(() => {
+        // High quality casino sample asset
+        fabric.Image.fromURL('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=600&auto=format&fit=crop&q=80', function(img) {
+          img.scaleToWidth(260);
+          img.set({ left: 170, top: 150 });
+          canvas.add(img);
+          canvas.setActiveObject(img);
+          btn.innerHTML = "<span>🪄</span> AI ဖြင့် ပုံအသစ်ထုတ်မည်";
+          btn.disabled = false;
+        });
+      }, 1000);
+    });
+
+    // Burmese Voice Synthesizer (Web Speech API)
+    document.getElementById('speakBtn').addEventListener('click', function() {
+      const text = document.getElementById('ttsInput').value;
+      if (!text) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'my-MM'; // Burmese locale
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    });
+
+    // Delete Active Object
     document.getElementById('deleteBtn').addEventListener('click', function () {
       const activeObject = canvas.getActiveObject();
-      if (activeObject) {
-        canvas.remove(activeObject);
-      }
+      if (activeObject) canvas.remove(activeObject);
     });
 
-    // အားလုံးရှင်းရန်
+    // Clear Canvas
     document.getElementById('clearBtn').addEventListener('click', function () {
       canvas.clear();
-      canvas.backgroundColor = '#1e293b';
+      canvas.backgroundColor = '#111827';
       canvas.renderAll();
     });
 
-    // ပုံဒေါင်းလုဒ်ဆွဲရန်
+    // Download Promo Graphic
     document.getElementById('downloadBtn').addEventListener('click', function () {
       const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
       const link = document.createElement('a');
-      link.download = 'casino-promo.png';
+      link.download = 'promo-graphic.png';
       link.href = dataURL;
       link.click();
     });
