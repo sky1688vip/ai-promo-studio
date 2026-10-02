@@ -9,10 +9,10 @@
   <!-- Fabric.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
   <style>
-    body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    .canvas-container { margin: 0 auto; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7); }
+    body { background-color: #080c14; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .canvas-container { margin: 0 auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9); }
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -25,12 +25,10 @@
         <h1 class="text-lg font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent">
           AI Promo Studio
         </h1>
-        <p class="text-xs text-slate-400">Casino Content & Video Generator</p>
+        <p class="text-xs text-slate-400">Casino Content & Banner Generator</p>
       </div>
     </div>
-    <div class="flex items-center gap-3">
-      <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">Free AI Connected</span>
-    </div>
+    <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">FLUX HD Engine</span>
   </header>
 
   <!-- Main Workspace -->
@@ -40,21 +38,26 @@
     <aside class="w-full lg:w-96 bg-slate-900 border-r border-slate-800 p-5 flex flex-col gap-5 overflow-y-auto max-h-screen">
       
       <!-- 1. AI Image Generator Panel -->
-      <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+      <div class="bg-slate-950/70 p-4 rounded-xl border border-amber-500/20">
         <h2 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <span>✨</span> AI ပုံထုတ်လုပ်ရန် (Pollinations AI)
+          <span>✨</span> ကာစီနို AI ပုံထုတ်လုပ်ရန် (HD Quality)
         </h2>
-        <textarea id="aiPrompt" rows="2" placeholder="ဥပမာ - Casino lucky roulette wheel with flying gold coins, neon light, 3D render..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400">3D golden casino slot machine with jackpot coins, vibrant neon lights</textarea>
         
-        <!-- Preset Promo Prompts -->
-        <div class="flex flex-wrap gap-1 mt-2 mb-2">
-          <button class="ai-chip text-[10px] bg-slate-800 hover:bg-slate-700 text-amber-300 px-2 py-0.5 rounded border border-slate-700">🎰 စလော့ & ဂျက်ပေါ့</button>
-          <button class="ai-chip text-[10px] bg-slate-800 hover:bg-slate-700 text-amber-300 px-2 py-0.5 rounded border border-slate-700">🎡 လှည့်ဘီး (Lucky Wheel)</button>
-          <button class="ai-chip text-[10px] bg-slate-800 hover:bg-slate-700 text-amber-300 px-2 py-0.5 rounded border border-slate-700">🎁 လက်ဆောင်သေတ္တာ</button>
+        <!-- Preset Prompts -->
+        <div class="flex flex-col gap-1.5 mb-2.5">
+          <label class="text-[11px] text-slate-400">ဒီဇိုင်း ပုံစံရွေးချယ်ပါ -</label>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🎰 ဂျက်ပေါ့ စလော့စက်</button>
+            <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🎡 ကာစီနို လှည့်ဘီး</button>
+            <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🎁 ရွှေဒင်္ဂါးလက်ဆောင်</button>
+            <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">👑 VIP ကာစီနိုခန်းမ</button>
+          </div>
         </div>
 
-        <button id="generateAiImgBtn" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold py-2 rounded-lg text-xs transition flex justify-center items-center gap-1.5 shadow-md">
-          <span id="btnIcon">🪄</span> <span id="btnText">AI ဖြင့် ပုံအသစ်ထုတ်မည်</span>
+        <textarea id="aiPrompt" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-400">3D golden casino slot machine with explosive flying gold coins, neon casino lights, luxury cinematic 8k</textarea>
+        
+        <button id="generateAiImgBtn" class="mt-3 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 hover:opacity-95 text-slate-950 font-bold py-2.5 rounded-lg text-xs transition flex justify-center items-center gap-2 shadow-lg shadow-amber-950/40">
+          <span id="btnIcon">🪄</span> <span id="btnText">ကာစီနို ပုံအသစ်ထုတ်မည် (FLUX AI)</span>
         </button>
       </div>
 
@@ -69,7 +72,7 @@
 
       <!-- 3. Text & Casino Promo Presets -->
       <div>
-        <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">စာသားထည့်သွင်းရန်</h2>
+        <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">စာတန်းဒီဇိုင်း ထည့်ရန်</h2>
         <div class="flex flex-col gap-2">
           <input type="text" id="textInput" placeholder="စာသားရိုက်ထည့်ပါ..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
           
@@ -88,7 +91,7 @@
       <!-- 4. Burmese TTS -->
       <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800">
         <h2 class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <span>🔊</span> မြန်မာအသံ စမ်းသပ်ရန်
+          <span>🔊</span> မြန်မာအသံ ထည့်သွင်းရန်
         </h2>
         <input type="text" id="ttsInput" value="အခုပဲ အကောင့်ဖွင့်ပြီး ဘောနပ်စ်ရယူလိုက်ပါ" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-sky-400">
         <button id="speakBtn" class="mt-2 w-full bg-sky-600 hover:bg-sky-500 text-white font-semibold py-1.5 rounded-lg text-xs transition flex justify-center items-center gap-1.5">
@@ -126,37 +129,38 @@
   </div>
 
   <script>
-    // Canvas တည်ဆောက်ခြင်း
     const canvas = new fabric.Canvas('promoCanvas', {
-      backgroundColor: '#0f172a'
+      backgroundColor: '#0a0f1d'
     });
 
-    // စတင်ချိန် အခြေခံ background
+    // အခြေခံ Background
     const defaultBg = new fabric.Rect({
       left: 0,
       top: 0,
       width: 600,
       height: 600,
-      fill: '#111827',
+      fill: '#0a0f1d',
       selectable: false
     });
     canvas.add(defaultBg);
 
-    // AI Prompts Chips ရွေးချယ်မှု
+    // ပရိုမိုးရှင်း ဒီဇိုင်း Prompt ရွေးချယ်မှု
     document.querySelectorAll('.ai-chip').forEach(chip => {
       chip.addEventListener('click', function() {
         const text = this.innerText;
-        if(text.includes('စလော့')) {
-          document.getElementById('aiPrompt').value = "3D golden casino slot machine with jackpot coins, neon lighting, luxury 8k render";
+        if(text.includes('စလော့စက်')) {
+          document.getElementById('aiPrompt').value = "Stunning 3D golden jackpot slot machine, explosive glowing gold coins flying everywhere, vibrant purple and gold casino background, high end commercial banner, 8k resolution";
         } else if(text.includes('လှည့်ဘီး')) {
-          document.getElementById('aiPrompt').value = "3D lucky spin wheel casino game, glowing gold and purple, celebration background";
-        } else if(text.includes('လက်ဆောင်သေတ္တာ')) {
-          document.getElementById('aiPrompt').value = "Luxury open red gift box with gold coins and diamonds exploding out, casino prize 3D";
+          document.getElementById('aiPrompt').value = "Luxury 3D casino lucky fortune wheel, glowing neon golden rays, diamonds and poker chips floating, dark premium casino ambiance, cinematic lighting, 8k";
+        } else if(text.includes('လက်ဆောင်')) {
+          document.getElementById('aiPrompt').value = "Exploding luxury red velvet gift box filled with glowing gold coins and sparkling gems, dynamic casino jackpot celebration effect, 3D hyper-detailed render";
+        } else if(text.includes('VIP')) {
+          document.getElementById('aiPrompt').value = "Exclusive VIP luxury casino hall, blackjack and poker gold table, neon golden glowing entrance, premium dark atmospheric lighting, 8k wallpaper";
         }
       });
     });
 
-    // Pollinations AI စနစ်ဖြင့် ပုံအသစ် တိုက်ရိုက်ထုတ်ယူခြင်း
+    // FLUX Engine ဖြင့် ပုံထုတ်ခြင်း (No Watermark + High Quality)
     document.getElementById('generateAiImgBtn').addEventListener('click', function() {
       const prompt = document.getElementById('aiPrompt').value.trim();
       if (!prompt) return;
@@ -165,17 +169,25 @@
       const btnText = document.getElementById('btnText');
       const btnIcon = document.getElementById('btnIcon');
       
-      btnText.innerText = "AI ပုံဆွဲပေးနေပါသည် (ခေတ္တစောင့်ပါ)...";
+      btnText.innerText = "FLUX AI ဖြင့် ပုံထုတ်နေပါသည် (ခေတ္တစောင့်ပါ)...";
       btnIcon.innerText = "⏳";
       btn.disabled = true;
 
-      // Random seed ထည့်ပြီး ပုံအသစ် အမြဲရအောင် ပြုလုပ်ခြင်း
-      const seed = Math.floor(Math.random() * 100000);
-      const encodedPrompt = encodeURIComponent(prompt);
-      const aiImageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=600&height=600&seed=${seed}&nologo=true`;
+      const seed = Math.floor(Math.random() * 999999);
+      // FLUX model + nologo query ဖြင့် watermark မပါအောင် ပြုလုပ်ခြင်း
+      const encodedPrompt = encodeURIComponent(prompt + ", commercial casino promotional graphic, hyper quality, sharp focus, no watermark, no text");
+      const aiImageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=600&height=600&seed=${seed}&model=flux&nologo=true`;
 
       fabric.Image.fromURL(aiImageUrl, function(img) {
-        img.scaleToWidth(450);
+        if (!img) {
+          alert("ပုံထုတ်ရာတွင် အခက်အခဲရှိနေပါသည်။ ပြန်လည်ကြိုးစားပေးပါ။");
+          btnText.innerText = "ကာစီနို ပုံအသစ်ထုတ်မည် (FLUX AI)";
+          btnIcon.innerText = "🪄";
+          btn.disabled = false;
+          return;
+        }
+        
+        img.scaleToWidth(500);
         img.set({
           left: (600 - img.getScaledWidth()) / 2,
           top: (600 - img.getScaledHeight()) / 2
@@ -184,13 +196,13 @@
         canvas.setActiveObject(img);
         canvas.renderAll();
 
-        btnText.innerText = "AI ဖြင့် ပုံအသစ်ထုတ်မည်";
+        btnText.innerText = "ကာစီနို ပုံအသစ်ထုတ်မည် (FLUX AI)";
         btnIcon.innerText = "🪄";
         btn.disabled = false;
       }, { crossOrigin: 'anonymous' });
     });
 
-    // မိမိစက်ထဲက ပုံ Upload တင်ခြင်း
+    // Image Upload
     document.getElementById('imageLoader').addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -205,13 +217,13 @@
       reader.readAsDataURL(file);
     });
 
-    // စာသား ထည့်သွင်းခြင်း
+    // Add Text Function
     function addTextToCanvas(content) {
       const text = new fabric.IText(content, {
-        left: 100,
+        left: 120,
         top: 250,
         fontFamily: 'sans-serif',
-        fill: '#facc15',
+        fill: '#fbbf24',
         stroke: '#000000',
         strokeWidth: 2,
         fontSize: 34,
@@ -233,7 +245,7 @@
       });
     });
 
-    // မြန်မာအသံစနစ် (TTS)
+    // Burmese Voice
     document.getElementById('speakBtn').addEventListener('click', function() {
       const text = document.getElementById('ttsInput').value;
       if (!text) return;
@@ -243,7 +255,7 @@
       window.speechSynthesis.speak(utterance);
     });
 
-    // ဖျက်ရန်
+    // Delete
     document.getElementById('deleteBtn').addEventListener('click', function () {
       const activeObject = canvas.getActiveObject();
       if (activeObject && activeObject !== defaultBg) {
@@ -251,14 +263,14 @@
       }
     });
 
-    // ရှင်းရန်
+    // Clear
     document.getElementById('clearBtn').addEventListener('click', function () {
       canvas.clear();
       canvas.add(defaultBg);
       canvas.renderAll();
     });
 
-    // ဒေါင်းလုဒ်ဆွဲရန်
+    // Download
     document.getElementById('downloadBtn').addEventListener('click', function () {
       const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
       const link = document.createElement('a');
