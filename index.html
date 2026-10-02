@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Promo Studio</title>
+  <title>AI Promo Studio - Pro AI</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Fabric.js CDN -->
@@ -25,10 +25,12 @@
         <h1 class="text-lg font-bold bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-500 bg-clip-text text-transparent">
           AI Promo Studio
         </h1>
-        <p class="text-xs text-slate-400">Casino Content & Banner Generator</p>
+        <p class="text-xs text-slate-400">Professional Casino Content Generator</p>
       </div>
     </div>
-    <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">FLUX HD Engine</span>
+    <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> SDXL AI Connected
+    </span>
   </header>
 
   <!-- Main Workspace -->
@@ -40,24 +42,24 @@
       <!-- 1. AI Image Generator Panel -->
       <div class="bg-slate-950/70 p-4 rounded-xl border border-amber-500/20">
         <h2 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-          <span>✨</span> ကာစီနို AI ပုံထုတ်လုပ်ရန် (HD Quality)
+          <span>✨</span> Professional AI ပုံထုတ်လုပ်ရန် (SDXL)
         </h2>
         
         <!-- Preset Prompts -->
         <div class="flex flex-col gap-1.5 mb-2.5">
-          <label class="text-[11px] text-slate-400">ဒီဇိုင်း ပုံစံရွေးချယ်ပါ -</label>
+          <label class="text-[11px] text-slate-400">ဒီဇိုင်း စတိုင်ရွေးပါ -</label>
           <div class="grid grid-cols-2 gap-1.5">
             <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🎰 ဂျက်ပေါ့ စလော့စက်</button>
             <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🎡 ကာစီနို လှည့်ဘီး</button>
             <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🎁 ရွှေဒင်္ဂါးလက်ဆောင်</button>
-            <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">👑 VIP ကာစီနိုခန်းမ</button>
+            <button class="ai-chip text-[11px] bg-slate-800 hover:bg-amber-500/20 hover:text-amber-300 text-slate-300 p-2 rounded-lg border border-slate-700 text-left transition">🃏 ရှမ်းကိုးမီး/ဖဲချပ်</button>
           </div>
         </div>
 
-        <textarea id="aiPrompt" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-400">3D golden casino slot machine with explosive flying gold coins, neon casino lights, luxury cinematic 8k</textarea>
+        <textarea id="aiPrompt" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-400">A dazzling 3D golden casino slot machine, explosive flying gold coins, casino neon lights, dark luxury background, vibrant celebration atmosphere, octane render, 8k resolution</textarea>
         
         <button id="generateAiImgBtn" class="mt-3 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 hover:opacity-95 text-slate-950 font-bold py-2.5 rounded-lg text-xs transition flex justify-center items-center gap-2 shadow-lg shadow-amber-950/40">
-          <span id="btnIcon">🪄</span> <span id="btnText">ကာစီနို ပုံအသစ်ထုတ်မည် (FLUX AI)</span>
+          <span id="btnIcon">🪄</span> <span id="btnText">ကာစီနို ပုံအသစ်ထုတ်မည် (AI Generate)</span>
         </button>
       </div>
 
@@ -129,11 +131,12 @@
   </div>
 
   <script>
+    const HF_TOKEN = "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";
+
     const canvas = new fabric.Canvas('promoCanvas', {
       backgroundColor: '#0a0f1d'
     });
 
-    // အခြေခံ Background
     const defaultBg = new fabric.Rect({
       left: 0,
       top: 0,
@@ -144,24 +147,50 @@
     });
     canvas.add(defaultBg);
 
-    // ပရိုမိုးရှင်း ဒီဇိုင်း Prompt ရွေးချယ်မှု
+    // Prompt Chips ရွေးချယ်မှု
     document.querySelectorAll('.ai-chip').forEach(chip => {
       chip.addEventListener('click', function() {
         const text = this.innerText;
         if(text.includes('စလော့စက်')) {
-          document.getElementById('aiPrompt').value = "Stunning 3D golden jackpot slot machine, explosive glowing gold coins flying everywhere, vibrant purple and gold casino background, high end commercial banner, 8k resolution";
+          document.getElementById('aiPrompt').value = "A dazzling 3D golden casino slot machine, explosive flying gold coins, vibrant casino neon lights, dark luxury background, octane render, 8k resolution";
         } else if(text.includes('လှည့်ဘီး')) {
-          document.getElementById('aiPrompt').value = "Luxury 3D casino lucky fortune wheel, glowing neon golden rays, diamonds and poker chips floating, dark premium casino ambiance, cinematic lighting, 8k";
+          document.getElementById('aiPrompt').value = "Luxury 3D casino lucky fortune wheel, golden glowing lighting, floating poker chips and gemstones, dark elegant casino atmosphere, 8k render";
         } else if(text.includes('လက်ဆောင်')) {
           document.getElementById('aiPrompt').value = "Exploding luxury red velvet gift box filled with glowing gold coins and sparkling gems, dynamic casino jackpot celebration effect, 3D hyper-detailed render";
-        } else if(text.includes('VIP')) {
-          document.getElementById('aiPrompt').value = "Exclusive VIP luxury casino hall, blackjack and poker gold table, neon golden glowing entrance, premium dark atmospheric lighting, 8k wallpaper";
+        } else if(text.includes('ရှမ်းကိုးမီး')) {
+          document.getElementById('aiPrompt').value = "Floating golden playing cards, glowing ace of spades, poker chips and gold coins swirling around, luxury VIP casino table background, dramatic lighting, 8k";
         }
       });
     });
 
-    // FLUX Engine ဖြင့် ပုံထုတ်ခြင်း (No Watermark + High Quality)
-    document.getElementById('generateAiImgBtn').addEventListener('click', function() {
+    // Hugging Face SDXL AI ချိတ်ဆက်ခြင်း
+    async function queryHuggingFace(promptText) {
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+        {
+          headers: {
+            Authorization: `Bearer ${HF_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            inputs: promptText,
+            parameters: {
+              negative_prompt: "text, watermark, low quality, blurry, deformed, bad anatomy, ugly, cartoon, signature"
+            }
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("AI ဆာဗာမှ ပြန်လည်ဖြေကြားမှု မရရှိပါ (Status: " + response.status + ")");
+      }
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    }
+
+    // AI ပုံထုတ် Button
+    document.getElementById('generateAiImgBtn').addEventListener('click', async function() {
       const prompt = document.getElementById('aiPrompt').value.trim();
       if (!prompt) return;
 
@@ -169,40 +198,35 @@
       const btnText = document.getElementById('btnText');
       const btnIcon = document.getElementById('btnIcon');
       
-      btnText.innerText = "FLUX AI ဖြင့် ပုံထုတ်နေပါသည် (ခေတ္တစောင့်ပါ)...";
+      btnText.innerText = "SDXL AI ဖြင့် ပုံထုတ်နေပါသည် (၁၅ စက္ကန့်ခန့်စောင့်ပါ)...";
       btnIcon.innerText = "⏳";
       btn.disabled = true;
 
-      const seed = Math.floor(Math.random() * 999999);
-      // FLUX model + nologo query ဖြင့် watermark မပါအောင် ပြုလုပ်ခြင်း
-      const encodedPrompt = encodeURIComponent(prompt + ", commercial casino promotional graphic, hyper quality, sharp focus, no watermark, no text");
-      const aiImageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=600&height=600&seed=${seed}&model=flux&nologo=true`;
+      try {
+        const imageUrl = await queryHuggingFace(prompt);
+        fabric.Image.fromURL(imageUrl, function(img) {
+          img.scaleToWidth(500);
+          img.set({
+            left: (600 - img.getScaledWidth()) / 2,
+            top: (600 - img.getScaledHeight()) / 2
+          });
+          canvas.add(img);
+          canvas.setActiveObject(img);
+          canvas.renderAll();
 
-      fabric.Image.fromURL(aiImageUrl, function(img) {
-        if (!img) {
-          alert("ပုံထုတ်ရာတွင် အခက်အခဲရှိနေပါသည်။ ပြန်လည်ကြိုးစားပေးပါ။");
-          btnText.innerText = "ကာစီနို ပုံအသစ်ထုတ်မည် (FLUX AI)";
+          btnText.innerText = "ကာစီနို ပုံအသစ်ထုတ်မည် (AI Generate)";
           btnIcon.innerText = "🪄";
           btn.disabled = false;
-          return;
-        }
-        
-        img.scaleToWidth(500);
-        img.set({
-          left: (600 - img.getScaledWidth()) / 2,
-          top: (600 - img.getScaledHeight()) / 2
         });
-        canvas.add(img);
-        canvas.setActiveObject(img);
-        canvas.renderAll();
-
-        btnText.innerText = "ကာစီနို ပုံအသစ်ထုတ်မည် (FLUX AI)";
+      } catch (err) {
+        alert("ပုံထုတ်ရာတွင် အခက်အခဲရှိနေပါသည်: " + err.message);
+        btnText.innerText = "ကာစီနို ပုံအသစ်ထုတ်မည် (AI Generate)";
         btnIcon.innerText = "🪄";
         btn.disabled = false;
-      }, { crossOrigin: 'anonymous' });
+      }
     });
 
-    // Image Upload
+    // Upload Image
     document.getElementById('imageLoader').addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -217,7 +241,7 @@
       reader.readAsDataURL(file);
     });
 
-    // Add Text Function
+    // Add Text
     function addTextToCanvas(content) {
       const text = new fabric.IText(content, {
         left: 120,
